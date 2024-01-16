@@ -25,7 +25,7 @@ class UserManager {
             }
             socket.on("createQuiz", (data) => {
                 console.log(data, "darshan");
-                this.quizManager.addProblem(data.roomId, data === null || data === void 0 ? void 0 : data.problem);
+                this.quizManager.addProblem(data.roomId, data.problem);
             });
             socket.on("next", data => {
                 this.quizManager.next(data.roomId);

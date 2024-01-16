@@ -13,7 +13,7 @@ export class IoManager {
 
     public static getIo(){
         if(!this.io){
-            const io = new Server(httpServer, {
+            const io = new Server(httpServer,  {
                 cors: {
                     origin: "*",
                     methods: ["GET", "POST"]

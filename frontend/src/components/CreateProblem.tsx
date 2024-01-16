@@ -24,13 +24,11 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
     },
   ]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  console.log(title, description, options, answer);
 
   return (
-    <div className="h-screen flex flex-col justify-center items-center w-full bg-black">
-      <form className="" onSubmit={handleSubmit}>
+    <div className=" flex flex-col justify-center items-center w-full">
+      <form className="">
         <label className="flex flex-col justify-center items-center mb-4">
           <span className="text-gray-700">Title:</span>
           <input
@@ -87,7 +85,9 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
 
         <button
           onClick={() => {
-            socket.emit("createProblem", {
+            console.log("CreateProblem");
+
+            socket.emit("createQuiz", {
               roomId,
               problem: {
                 title,

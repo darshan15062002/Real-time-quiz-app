@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { io, Socket } from "socket.io-client";
 import CreateProblem from "../components/CreateProblem";
+import QuizControl from "../components/QuizControl";
 
 function Admin() {
   const [roomId, setRoomId] = useState("");
@@ -47,7 +48,16 @@ function Admin() {
         </button>
       </div>
     );
-  return <>{socket && <CreateProblem socket={socket} roomId={quizId} />}</>;
+  return (
+    <>
+      {socket && (
+        <div className="flex flex-col bg-black justify-center items-center">
+          <CreateProblem socket={socket} roomId={quizId} />
+          <QuizControl socket={socket} roomId={quizId} />
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Admin;
