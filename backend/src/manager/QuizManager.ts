@@ -37,7 +37,11 @@ export class QuizManager {
         }[];
         answer: AllowedSubmissions;
     }) {
+        console.log("adding problem");
+        
         const quiz = this.getQuiz(roomId);
+        console.log(quiz);
+        
         if(!quiz) {
             return;
         }

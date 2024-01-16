@@ -1,122 +1,53 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-import { io } from "socket.io-client";
-
-const socket = io("http://localhost:3000");
+import { io, Socket } from "socket.io-client";
+import CreateProblem from "../components/CreateProblem";
 
 function Admin() {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    image: "",
-    options: [
-      { id: 1, title: "" },
-      { id: 2, title: "" },
-      { id: 3, title: "" },
-      { id: 4, title: "" },
-    ],
-    answer: "",
-  });
-
-  const handleChange = (e, index) => {
-    const { name, value } = e.target;
-    if (name === "options") {
-      const updatedOptions = [...formData.options];
-      updatedOptions[index].title = value;
-      setFormData({ ...formData, options: updatedOptions });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission, e.g., send data to the server
-    console.log("Form Data:", formData);
-  };
+  const [roomId, setRoomId] = useState("");
+  const [socket, setSocket] = useState<Socket>();
+  const [quizId, setQuizId] = useState("");
 
   useEffect(() => {
-    socket.on("connect", () => {
-      socket.emit("addminJoin", {
+    const _socket = io("http://localhost:3000");
+    setSocket(_socket);
+    _socket.on("connect", () => {
+      console.log("connected");
+
+      _socket.emit("addminJoin", {
         password: "admin",
       });
     });
 
     return () => {
-      socket.off("connect", () => {});
-      socket.off("disconnect", () => {});
-      socket.off("foo", () => {});
+      _socket?.off("connect", () => {});
+      _socket.off("disconnect", () => {});
+      _socket.off("foo", () => {});
     };
   }, []);
-  return (
-    <div className="h-screen flex flex-col justify-center items-center w-full bg-black">
-      <form className="max-w-xs  mt-8" onSubmit={handleSubmit}>
-        <label className="block mb-4">
-          <span className="text-gray-700">Title:</span>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </label>
 
-        <label className="block mb-4">
-          <span className="text-gray-700">Description:</span>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </label>
-
-        <label className="block mb-4">
-          <span className="text-gray-700">Image:</span>
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </label>
-
-        <label className="block mb-4">
-          <span className="text-gray-700">Options:</span>
-          {formData.options.map((option, index) => (
-            <input
-              key={option.id}
-              type="text"
-              name="options"
-              value={option.title}
-              onChange={(e) => handleChange(e, index)}
-              className="mt-1 p-2 w-full border rounded-md mb-2"
-            />
-          ))}
-        </label>
-
-        <label className="block mb-4">
-          <span className="text-gray-700">Answer:</span>
-          <input
-            type="text"
-            name="answer"
-            value={formData.answer}
-            onChange={handleChange}
-            className="mt-1 p-2 w-full border rounded-md"
-          />
-        </label>
-
+  if (!quizId)
+    return (
+      <div className="h-screen bg-black flex flex-col justify-center items-center gap-y-5">
+        <input
+          className=" p-3"
+          type="text"
+          placeholder="RoomID"
+          value={roomId}
+          onChange={(e) => setRoomId(e.target.value)}
+        />
         <button
-          type="submit"
-          className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+          className="px-4 py-2 bg-white rounded-sm font-bold "
+          onClick={() => {
+            socket?.emit("createQuiz", { roomId });
+            setQuizId(roomId);
+          }}
         >
-          Submit
+          create Room
         </button>
-      </form>
-    </div>
-  );
+      </div>
+    );
+  return <>{socket && <CreateProblem socket={socket} roomId={quizId} />}</>;
 }
 
 export default Admin;

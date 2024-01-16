@@ -23,7 +23,9 @@ class QuizManager {
         return (_a = this.quizes.find((x) => x.roomId === roomId)) !== null && _a !== void 0 ? _a : null;
     }
     addProblem(roomId, problem) {
+        console.log("adding problem");
         const quiz = this.getQuiz(roomId);
+        console.log(quiz);
         if (!quiz) {
             return;
         }

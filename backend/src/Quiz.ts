@@ -65,6 +65,8 @@ debug() {
 
 
 addProblem(problem: Problem) {
+    console.log("add Problem2");
+    
     this.problems.push(problem);
     console.log(this.problems);
 }

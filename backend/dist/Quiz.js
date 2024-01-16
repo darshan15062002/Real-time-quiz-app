@@ -25,6 +25,7 @@ class Quiz {
         console.log(this.activeProblem);
     }
     addProblem(problem) {
+        console.log("add Problem2");
         this.problems.push(problem);
         console.log(this.problems);
     }

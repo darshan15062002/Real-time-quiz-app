@@ -35,7 +35,9 @@ export class UserManager {
             }
 
             socket.on("createQuiz",(data)=>{
-                this.quizManager.addProblem(data.roomId, data.problem)
+                console.log(data,"darshan");
+                
+                this.quizManager.addProblem(data.roomId, data?.problem)
             })
 
             socket.on("next", data => {
