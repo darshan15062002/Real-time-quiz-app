@@ -51,7 +51,7 @@ function Admin() {
   return (
     <>
       {socket && (
-        <div className="flex flex-col bg-black justify-center items-center">
+        <div className="flex h-screen flex-col bg-black justify-center items-center">
           <CreateProblem socket={socket} roomId={quizId} />
           <QuizControl socket={socket} roomId={quizId} />
         </div>

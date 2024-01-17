@@ -3,7 +3,7 @@
 import { IoManager } from "./manager/IoManager"
 
 export type AllowedSubmissions = 0 | 1 | 2 | 3;
-const PROBLEM_TIME_S = 20;
+const PROBLEM_TIME_S = 1000;
 
 interface User {
     name: string;
@@ -47,7 +47,7 @@ constructor(roomId:string) {
         this.activeProblem = 0;
         this.users = [];
         this.currentState = "not_started";
-        console.log("room created");
+     
         setInterval(() => {
             this.debug();
         }, 10000)
@@ -160,7 +160,8 @@ getLeaderboard() {
 getCurrentState() {
     if (this.currentState === "not_started") {
         return {
-            type: "not_started"
+            type: "not_started",
+            users:this.users
         }
     }
     if (this.currentState === "ended") {

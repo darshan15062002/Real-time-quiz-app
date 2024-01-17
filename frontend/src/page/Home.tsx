@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { Question } from "../components/Question";
 import { LeaderBoard } from "../components/LeaderBoard";
+import { QuizNoteStarted } from "../components/QuizNotStarted";
 
 function Home() {
   const [name, setName] = useState("");
@@ -34,6 +35,7 @@ function Home() {
             placeholder="room Id"
           />
           <button
+            className="bg-white p-2"
             onClick={() => {
               setSubmitted(true);
             }}
@@ -50,12 +52,19 @@ function Home() {
 
 export default Home;
 
-export const UserLoggedIn = ({ code, name }) => {
+export const UserLoggedIn = ({
+  code,
+  name,
+}: {
+  code: string;
+  name: string;
+}) => {
   const [currentState, setCurrentState] = useState("not_started");
   const [currentQuestion, setCurrentQuestion] = useState();
   const [leaderboard, setLeaderboard] = useState([]);
   const [socket, setSocket] = useState<null | Socket>(null);
-  const [userId, setUserId] = useState();
+  const [userIds, setUserId] = useState<"string">("");
+
   useEffect(() => {
     const _socket = io("http://localhost:3000");
     setSocket(_socket);
@@ -98,21 +107,40 @@ export const UserLoggedIn = ({ code, name }) => {
   }, []);
 
   if (currentState === "not_started") {
-    return <div className="">Quiz not started yet</div>;
+    return <QuizNoteStarted />;
   }
-  if (currentState === "question") {
-    return <Question question={question} />;
-  }
-  if (currentState === "leaderboard") {
+  if (currentState === "question" && currentQuestion && socket) {
     return (
-      <LeaderBoard
-        leaderboard={leaderboard.map((x: any) => ({
-          points: x.points,
-          username: x.name,
-          image: x.image,
-        }))}
+      <Question
+        roomId={code}
+        userId={userIds}
+        problemId={currentQuestion?.id}
+        quizData={{
+          title: currentQuestion.description,
+          options: currentQuestion.options,
+        }}
+        socket={socket}
       />
     );
   }
-  return <div className="">quiz is ended</div>;
+  if (currentState === "leaderboard" && leaderboard) {
+    return (
+      <LeaderBoard
+        leaderboard={leaderboard.map(
+          (x: {
+            id: string;
+            points: number;
+            name: string;
+            image?: string;
+          }) => ({
+            id: x.id,
+            points: x.points,
+            username: x.name,
+            image: x.image,
+          })
+        )}
+      />
+    );
+  }
+  return <div className="">{userIds}quiz is ended</div>;
 };

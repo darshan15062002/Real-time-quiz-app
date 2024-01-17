@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Quiz = void 0;
 const IoManager_1 = require("./manager/IoManager");
-const PROBLEM_TIME_S = 20;
+const PROBLEM_TIME_S = 1000;
 class Quiz {
     constructor(roomId) {
         this.roomId = roomId;
@@ -11,7 +11,6 @@ class Quiz {
         this.activeProblem = 0;
         this.users = [];
         this.currentState = "not_started";
-        console.log("room created");
         setInterval(() => {
             this.debug();
         }, 10000);
@@ -115,7 +114,8 @@ class Quiz {
     getCurrentState() {
         if (this.currentState === "not_started") {
             return {
-                type: "not_started"
+                type: "not_started",
+                users: this.users
             };
         }
         if (this.currentState === "ended") {

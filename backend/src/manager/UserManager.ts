@@ -27,7 +27,7 @@ export class UserManager {
                 userId,
                 state: this.quizManager.getCurrentState(data.roomId)
             });
-            console.log(this.quizManager.getCurrentState(data.roomId));
+   
             socket.join(data.roomId);
 
         })
@@ -38,16 +38,20 @@ export class UserManager {
             }
  console.log("join admi called");
             
+//  empty quiz  get created
             socket.on("createQuiz", data => {
                 this.quizManager.addQuiz(data.roomId);
             })
-        
+// empty quiz get updated by new data
             socket.on("createProblem", data => {
                 this.quizManager.addProblem(data.roomId, data.problem);
             });
+// when admin add problem to quiz this will show to user 
             socket.on("next", data => {
                 this.quizManager.next(data.roomId);
             });
+
+           
 
             
         })
