@@ -3,7 +3,7 @@
 import { IoManager } from "./manager/IoManager"
 
 export type AllowedSubmissions = 0 | 1 | 2 | 3;
-const PROBLEM_TIME_S = 1000;
+const PROBLEM_TIME_S = 10;
 
 interface User {
     name: string;

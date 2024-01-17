@@ -10,7 +10,7 @@ export const Question = ({
 }: {
   quizData: {
     title: string;
-    options: string[];
+    options: { title: string; id: number }[];
   };
   socket: Socket;
   roomId: string;
@@ -56,7 +56,7 @@ export const Question = ({
               name=""
               id=""
             />
-            <h3>{o}</h3>
+            <h3>{o.title}</h3>
           </div>
         ))}
         <div className="flex justify-between w-full mt-4 text-white">

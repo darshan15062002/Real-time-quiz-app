@@ -52,6 +52,19 @@ function Home() {
 
 export default Home;
 
+interface Question {
+  id: string;
+  title: string;
+  description: string;
+  options: {
+    id: number;
+    title: string;
+  }[];
+  startTime: number;
+  answer: number; // Assuming the answer is a number, adjust accordingly
+  submissions: string[]; // You might want to define a type for submissions as well
+}
+
 export const UserLoggedIn = ({
   code,
   name,
@@ -60,10 +73,10 @@ export const UserLoggedIn = ({
   name: string;
 }) => {
   const [currentState, setCurrentState] = useState("not_started");
-  const [currentQuestion, setCurrentQuestion] = useState();
+  const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [leaderboard, setLeaderboard] = useState([]);
   const [socket, setSocket] = useState<null | Socket>(null);
-  const [userIds, setUserId] = useState<"string">("");
+  const [userIds, setUserId] = useState("");
 
   useEffect(() => {
     const _socket = io("http://localhost:3000");
@@ -114,7 +127,7 @@ export const UserLoggedIn = ({
       <Question
         roomId={code}
         userId={userIds}
-        problemId={currentQuestion?.id}
+        problemId={currentQuestion.id}
         quizData={{
           title: currentQuestion.description,
           options: currentQuestion.options,
