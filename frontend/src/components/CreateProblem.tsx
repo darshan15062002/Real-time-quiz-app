@@ -84,10 +84,9 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
         </label>
 
         <button
-          onClick={() => {
-            console.log("CreateProblem");
-
-            socket.emit("createQuiz", {
+          onClick={(e) => {
+            e.preventDefault();
+            socket.emit("createProblem", {
               roomId,
               problem: {
                 title,
@@ -100,7 +99,7 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
           type="submit"
           className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
         >
-          Submit
+          Add Problem
         </button>
       </form>
     </div>

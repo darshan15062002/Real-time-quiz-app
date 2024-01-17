@@ -53,6 +53,7 @@ class QuizManager {
         }
         const quiz = new Quiz_1.Quiz(roomId);
         this.quizes.push(quiz);
+        console.log(this.quizes);
     }
 }
 exports.QuizManager = QuizManager;

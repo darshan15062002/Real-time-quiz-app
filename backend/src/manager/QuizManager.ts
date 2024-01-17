@@ -37,14 +37,15 @@ export class QuizManager {
         }[];
         answer: AllowedSubmissions;
     }) {
-       
-        
+     
         const quiz = this.getQuiz(roomId);
    
         
         if(!quiz) {
             return;
         }
+        
+        
         quiz.addProblem({
             ...problem,
             id: (globalProblemId++).toString(),
@@ -81,6 +82,8 @@ export class QuizManager {
         }
         const quiz = new Quiz(roomId);
         this.quizes.push(quiz);
+        console.log(this.quizes);
+        
     }   
 
 }

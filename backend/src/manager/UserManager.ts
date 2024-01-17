@@ -18,13 +18,16 @@ export class UserManager {
 
     private createHandlers(socket: Socket) {
         socket.on("join",(data)=>{
+            console.log("join user called", data);
 
             const userId  = this.quizManager.addUser(data.roomId,data.name);
+
 
             socket.emit("init", {
                 userId,
                 state: this.quizManager.getCurrentState(data.roomId)
             });
+            console.log(this.quizManager.getCurrentState(data.roomId));
             socket.join(data.roomId);
 
         })
@@ -33,13 +36,15 @@ export class UserManager {
             if (data.password !== ADMIN_PASSWORD) {
                 return
             }
-
-            socket.on("createQuiz",(data)=>{
-                console.log(data,"darshan");
-                
-                this.quizManager.addProblem(data.roomId, data.problem)
+ console.log("join admi called");
+            
+            socket.on("createQuiz", data => {
+                this.quizManager.addQuiz(data.roomId);
             })
-
+        
+            socket.on("createProblem", data => {
+                this.quizManager.addProblem(data.roomId, data.problem);
+            });
             socket.on("next", data => {
                 this.quizManager.next(data.roomId);
             });
