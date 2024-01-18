@@ -119,12 +119,16 @@ genRandonString(length: number) {
     return result;
  }
 addUser(name: string) {
+    console.log("add user called ",name);
+    
     const id = this.genRandonString(7);
     this.users.push({
         id,
         name,
         points: 0
     })
+    
+    
     return id;
 }
 submit(userId: string, roomId: string, problemId: string, submission: AllowedSubmissions) {
@@ -150,7 +154,10 @@ submit(userId: string, roomId: string, problemId: string, submission: AllowedSub
         isCorrect: problem.answer === submission,
         optionSelected: submission
     });
-    user.points += (1000 - (500 * (new Date().getTime() - problem.startTime) / (PROBLEM_TIME_S * 1000)));
+    if(problem.answer === submission) {
+        user.points += (1000 - (500 * (new Date().getTime() - problem.startTime) / (PROBLEM_TIME_S * 1000)));
+    }
+    
 }
 
 getLeaderboard() {

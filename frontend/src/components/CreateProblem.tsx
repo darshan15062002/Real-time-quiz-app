@@ -24,36 +24,34 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
     },
   ]);
 
-  console.log(title, description, options, answer);
-
   return (
     <div className=" flex flex-col justify-center items-center w-full">
-      <form className="">
-        <label className="flex flex-col justify-center items-center mb-4">
+      <form className="w-72">
+        <label className=" hidden  flex-col justify-center items-center mb-4">
           <span className="text-gray-700">Title:</span>
           <input
             type="text"
             name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="mt-1 p-1 text-black border rounded-md"
+            className="mt-1 w-full p-1 text-black border rounded-md"
           />
         </label>
 
         <label className="flex flex-col justify-center items-center mb-4">
-          <span className="text-gray-700">Description:</span>
+          <span className="text-gray-700">Question:</span>
           <textarea
             name="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="mt-1 p-1  border rounded-md"
+            className="mt-1 w-full p-1  border rounded-md"
           />
         </label>
 
         <label className=" flex flex-col  mb-4">
           <span className="text-gray-700 ">Options:</span>
           {[0, 1, 2, 3].map((optionId) => (
-            <div>
+            <div className=" flex">
               <input
                 type="radio"
                 checked={optionId === answer}
@@ -64,6 +62,8 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
               Option {optionId}
               <input
                 type="text"
+                value={options[optionId].title}
+                className="px-3 py-2 w-full mb-2 "
                 onChange={(e) => {
                   setOptions((options) =>
                     options.map((x) => {
@@ -86,6 +86,26 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
         <button
           onClick={(e) => {
             e.preventDefault();
+            setTitle("");
+            setDescription("");
+            setOptions([
+              {
+                id: 0,
+                title: "",
+              },
+              {
+                id: 1,
+                title: "",
+              },
+              {
+                id: 2,
+                title: "",
+              },
+              {
+                id: 3,
+                title: "",
+              },
+            ]);
             socket.emit("createProblem", {
               roomId,
               problem: {

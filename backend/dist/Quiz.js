@@ -77,6 +77,7 @@ class Quiz {
         return result;
     }
     addUser(name) {
+        console.log("add user called ", name);
         const id = this.genRandonString(7);
         this.users.push({
             id,
@@ -105,7 +106,9 @@ class Quiz {
             isCorrect: problem.answer === submission,
             optionSelected: submission
         });
-        user.points += (1000 - (500 * (new Date().getTime() - problem.startTime) / (PROBLEM_TIME_S * 1000)));
+        if (problem.answer === submission) {
+            user.points += (1000 - (500 * (new Date().getTime() - problem.startTime) / (PROBLEM_TIME_S * 1000)));
+        }
     }
     getLeaderboard() {
         return this.users.sort((a, b) => a.points < b.points ? 1 : -1).slice(0, 20);

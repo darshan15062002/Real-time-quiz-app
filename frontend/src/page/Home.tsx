@@ -12,7 +12,7 @@ function Home() {
   if (!submitted) {
     return (
       <div className="h-screen flex flex-col justify-center items-center w-full bg-black">
-        <form
+        <div
           className="flex
       flex-col gap-y-5"
         >
@@ -42,7 +42,7 @@ function Home() {
           >
             Join
           </button>
-        </form>
+        </div>
       </div>
     );
   }
@@ -81,9 +81,8 @@ export const UserLoggedIn = ({
   useEffect(() => {
     const _socket = io("http://localhost:3000");
     setSocket(_socket);
-
+    console.log("sdcd");
     _socket.on("connect", () => {
-      console.log(socket?.id);
       _socket.emit("join", {
         roomId: code,
         name,
@@ -117,6 +116,10 @@ export const UserLoggedIn = ({
       setCurrentState("question");
       setCurrentQuestion(data.problem);
     });
+
+    return () => {
+      _socket.disconnect();
+    };
   }, []);
 
   if (currentState === "not_started") {
@@ -155,5 +158,9 @@ export const UserLoggedIn = ({
       />
     );
   }
-  return <div className="">{userIds}quiz is ended</div>;
+  return (
+    <div className="bg-black h-screen flex justify-center items-center">
+      quiz is ended
+    </div>
+  );
 };
