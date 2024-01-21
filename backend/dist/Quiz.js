@@ -62,9 +62,9 @@ class Quiz {
         else {
             this.activeProblem--;
             // send final results here
-            // IoManager.getIo().emit("QUIZ_END", {
-            //     problem
-            // })
+            IoManager_1.IoManager.getIo().emit("QUIZ_END", {
+                problem
+            });
         }
     }
     genRandonString(length) {

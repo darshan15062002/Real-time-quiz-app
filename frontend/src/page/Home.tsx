@@ -159,7 +159,7 @@ export const UserLoggedIn = ({
     );
   }
   return (
-    <div className="bg-black h-screen flex justify-center items-center">
+    <div className="bg-black h-screen flex justify-center text-white items-center">
       quiz is ended
     </div>
   );

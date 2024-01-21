@@ -17,6 +17,8 @@ export const LeaderBoard = ({
 
   return (
     <div className=" flex flex-col justify-center items-center bg-black h-screen text-white ">
+      <h1 className="font-bold">LeaderBoard</h1>
+
       <div className="w-52 gap-y-2 flex flex-col">
         {leaderboard.map((o, index) => (
           <div className="flex gap-x-3  w-full py-2 px-3 justify-between rounded-sm  bg-slate-800 text-white ">

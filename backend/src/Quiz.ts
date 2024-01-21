@@ -104,9 +104,9 @@ next() {
     } else {
         this.activeProblem--;
         // send final results here
-        // IoManager.getIo().emit("QUIZ_END", {
-        //     problem
-        // })
+        IoManager.getIo().emit("QUIZ_END", {
+            problem
+        })
     }
 }
 genRandonString(length: number) {
