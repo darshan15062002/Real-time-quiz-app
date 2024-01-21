@@ -86,6 +86,9 @@ class Quiz {
         });
         return id;
     }
+    getUsers() {
+        return this.users;
+    }
     submit(userId, roomId, problemId, submission) {
         console.log("userId");
         console.log(userId);

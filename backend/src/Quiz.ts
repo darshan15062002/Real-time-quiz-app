@@ -131,6 +131,11 @@ addUser(name: string) {
     
     return id;
 }
+
+getUsers(){
+    return this.users
+}
+
 submit(userId: string, roomId: string, problemId: string, submission: AllowedSubmissions) {
     console.log("userId");
     console.log(userId);
@@ -166,6 +171,8 @@ getLeaderboard() {
 
 getCurrentState() {
     if (this.currentState === "not_started") {
+
+        
         return {
             type: "not_started",
             users:this.users

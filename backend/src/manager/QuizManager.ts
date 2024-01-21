@@ -27,6 +27,10 @@ export class QuizManager {
         return this.quizes.find((x:any) => x.roomId === roomId) ?? null;
     }
 
+    getUsers(roomId: string) {
+        return this.getQuiz(roomId)?.getUsers()
+    }
+
     public addProblem(roomId: string, problem: {
         title: string;
         description: string;

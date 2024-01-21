@@ -12,12 +12,21 @@ class UserManager {
     }
     createHandlers(socket) {
         socket.on("join", (data) => {
+            var _a;
             console.log("join user called", data);
             const userId = this.quizManager.addUser(data.roomId, data.name);
+            if (!userId) {
+                socket.emit("invaildRoom");
+            }
             socket.emit("init", {
                 userId,
                 state: this.quizManager.getCurrentState(data.roomId)
             });
+            ((_a = this.quizManager.getCurrentState(data.roomId)) === null || _a === void 0 ? void 0 : _a.type) == "not_started" && setInterval(() => {
+                socket.emit("usersJoined", {
+                    users: this.quizManager.getUsers(data.roomId)
+                });
+            }, 10000);
             socket.join(data.roomId);
         });
         socket.on("addminJoin", (data) => {

@@ -59,9 +59,9 @@ export const Question = ({
             <h3>{o.title}</h3>
           </div>
         ))}
-        <div className="flex justify-between w-full mt-4 text-white">
+        <div className="flex justify-center w-full mt-4 text-white">
           <button
-            className="py-3 px-10 bg-indigo-600 rounded-lg mx-8"
+            className="relative p-0.5 inline-flex items-center justify-center font-bold overflow-hidden group rounded-md"
             disabled={submitted}
             onClick={() => {
               setSubmitted(true);
@@ -73,7 +73,10 @@ export const Question = ({
               });
             }}
           >
-            Submit
+            <span className="w-full h-full bg-gradient-to-br from-[#ff8a05] via-[#ff5478] to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-[#ff5478] group-hover:to-[#ff8a05] absolute"></span>
+            <span className="relative px-6 py-3 transition-all ease-out bg-gray-900 rounded-md group-hover:bg-opacity-0 duration-400">
+              <span className="relative text-white">Sumit</span>
+            </span>
           </button>
         </div>
       </div>

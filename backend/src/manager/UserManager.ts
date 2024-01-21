@@ -21,14 +21,28 @@ export class UserManager {
             console.log("join user called", data);
 
             const userId  = this.quizManager.addUser(data.roomId,data.name);
+if(!userId) {
+    socket.emit("invaildRoom")
+}
+
 
 
             socket.emit("init", {
                 userId,
                 state: this.quizManager.getCurrentState(data.roomId)
             });
+
+
+            this.quizManager.getCurrentState(data.roomId)?.type=="not_started" && setInterval(()=>{
+    socket.emit("usersJoined",{
+        users: this.quizManager.getUsers(data.roomId)
+})
+
+},10000)
    
             socket.join(data.roomId);
+
+           
 
         })
 

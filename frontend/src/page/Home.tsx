@@ -8,10 +8,12 @@ function Home() {
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [code, setCode] = useState("");
+  const [error, setError] = useState("");
 
   if (!submitted) {
     return (
-      <div className="h-screen flex flex-col justify-center items-center w-full bg-black">
+      <div className="h-screen flex gap-y-5 flex-col justify-center items-center w-full bg-black">
+        <h1 className="font-bold text-4xl text-white">Join Room</h1>
         <div
           className="flex
       flex-col gap-y-5"
@@ -34,6 +36,7 @@ function Home() {
             id=""
             placeholder="room Id"
           />
+          <p className="  text-red-600">{error}</p>
           <button
             className="bg-white p-2"
             onClick={() => {
@@ -47,7 +50,14 @@ function Home() {
     );
   }
 
-  return <UserLoggedIn code={code} name={name} />;
+  return (
+    <UserLoggedIn
+      setError={setError}
+      setSubmitted={setSubmitted}
+      code={code}
+      name={name}
+    />
+  );
 }
 
 export default Home;
@@ -66,9 +76,13 @@ interface Question {
 }
 
 export const UserLoggedIn = ({
+  setSubmitted,
+  setError,
   code,
   name,
 }: {
+  setError: (value: string) => void;
+  setSubmitted: (value: boolean) => void;
   code: string;
   name: string;
 }) => {
@@ -77,11 +91,11 @@ export const UserLoggedIn = ({
   const [leaderboard, setLeaderboard] = useState([]);
   const [socket, setSocket] = useState<null | Socket>(null);
   const [userIds, setUserId] = useState("");
-
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const _socket = io("http://localhost:3000");
     setSocket(_socket);
-    console.log("sdcd");
+
     _socket.on("connect", () => {
       _socket.emit("join", {
         roomId: code,
@@ -89,10 +103,25 @@ export const UserLoggedIn = ({
       });
     });
 
-    _socket.on("init", ({ userId, state }) => {
-      console.log(userId);
+    _socket.on("invaildRoom", () => {
+      setError("Please enter vaild roomID");
+      setSubmitted(false);
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+    });
 
+    _socket.on("usersJoined", ({ users }) => {
+      console.log("usersjoined.", users);
+      setUsers(users);
+    });
+
+    _socket.on("init", ({ userId, state }) => {
       setUserId(userId);
+
+      if (state?.type === "not_started") {
+        setUsers(state?.users);
+      }
 
       if (state?.leaderboard) {
         setLeaderboard(state.leaderboard);
@@ -123,7 +152,7 @@ export const UserLoggedIn = ({
   }, []);
 
   if (currentState === "not_started") {
-    return <QuizNoteStarted />;
+    return <QuizNoteStarted users={users} />;
   }
   if (currentState === "question" && currentQuestion && socket) {
     return (
