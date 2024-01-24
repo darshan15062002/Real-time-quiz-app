@@ -28,7 +28,7 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
     <div className=" flex flex-col justify-center items-center w-full">
       <form className="w-72">
         <label className=" hidden  flex-col justify-center items-center mb-4">
-          <span className="text-gray-700">Title:</span>
+          <span className="text-gray-200">Title:</span>
           <input
             type="text"
             name="title"
@@ -39,7 +39,7 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
         </label>
 
         <label className="flex flex-col justify-center items-center mb-4">
-          <span className="text-gray-700">Question:</span>
+          <span className="text-gray-200">Question:</span>
           <textarea
             name="description"
             value={description}
@@ -49,35 +49,38 @@ function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {
         </label>
 
         <label className=" flex flex-col  mb-4">
-          <span className="text-gray-700 ">Options:</span>
+          <span className="text-gray-200 ">Options:</span>
           {[0, 1, 2, 3].map((optionId) => (
-            <div className=" flex">
-              <input
-                type="radio"
-                checked={optionId === answer}
-                onChange={() => {
-                  setAnswer(optionId);
-                }}
-              />
-              Option {optionId}
-              <input
-                type="text"
-                value={options[optionId].title}
-                className="px-3 py-2 w-full mb-2 "
-                onChange={(e) => {
-                  setOptions((options) =>
-                    options.map((x) => {
-                      if (x.id === optionId) {
-                        return {
-                          ...x,
-                          title: e.target.value,
-                        };
-                      }
-                      return x;
-                    })
-                  );
-                }}
-              />
+            <div className="  flex">
+              <div className="w-full relative ">
+                <input
+                  className="absolute top-3 h-5 w-3 left-3 bg-red-400 accent-green-400"
+                  type="radio"
+                  checked={optionId === answer}
+                  onChange={() => {
+                    setAnswer(optionId);
+                  }}
+                />
+
+                <input
+                  type="text"
+                  value={options[optionId].title}
+                  className="px-3 pl-10 py-2 w-full mb-2 "
+                  onChange={(e) => {
+                    setOptions((options) =>
+                      options.map((x) => {
+                        if (x.id === optionId) {
+                          return {
+                            ...x,
+                            title: e.target.value,
+                          };
+                        }
+                        return x;
+                      })
+                    );
+                  }}
+                />
+              </div>
               <br />
             </div>
           ))}

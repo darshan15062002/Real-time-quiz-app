@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import CreateProblem from "../components/CreateProblem";
 import QuizControl from "../components/QuizControl";
+import { Link } from "react-router-dom";
 
 function Admin() {
   const [roomId, setRoomId] = useState("");
@@ -30,6 +31,9 @@ function Admin() {
   if (!quizId)
     return (
       <div className="h-screen bg-black flex flex-col justify-center items-center gap-y-5">
+        <Link to="/" className="absolute top-6 right-10 bg-white p-2">
+          Join Room
+        </Link>
         <input
           className=" p-3"
           type="text"

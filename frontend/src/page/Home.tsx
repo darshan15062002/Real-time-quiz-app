@@ -3,8 +3,10 @@ import { Socket, io } from "socket.io-client";
 import { Question } from "../components/Question";
 import { LeaderBoard } from "../components/LeaderBoard";
 import { QuizNoteStarted } from "../components/QuizNotStarted";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [code, setCode] = useState("");
@@ -13,6 +15,14 @@ function Home() {
   if (!submitted) {
     return (
       <div className="h-screen flex gap-y-5 flex-col justify-center items-center w-full bg-black">
+        <button
+          className="absolute top-6 right-10 bg-white p-2"
+          onClick={() => {
+            navigate("./admin");
+          }}
+        >
+          Admin
+        </button>
         <h1 className="font-bold text-4xl text-white">Join Room</h1>
         <div
           className="flex
@@ -150,6 +160,8 @@ export const UserLoggedIn = ({
       _socket.disconnect();
     };
   }, []);
+
+  console.log(currentState, "currentState");
 
   if (currentState === "not_started") {
     return <QuizNoteStarted users={users} />;

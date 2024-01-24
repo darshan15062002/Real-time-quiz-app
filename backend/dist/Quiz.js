@@ -8,7 +8,7 @@ class Quiz {
         this.roomId = roomId;
         this.hasStarted = false;
         this.problems = [];
-        this.activeProblem = 0;
+        this.activeProblem = -1;
         this.users = [];
         this.currentState = "not_started";
         setInterval(() => {
