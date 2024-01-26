@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Socket } from "socket.io-client";
 
 function CreateProblem({ socket, roomId }: { socket: Socket; roomId: string }) {

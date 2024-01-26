@@ -103,7 +103,8 @@ export const UserLoggedIn = ({
   const [userIds, setUserId] = useState("");
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    const _socket = io("http://localhost:3000");
+    const _socket = io("https://real-time-quiz-app.onrender.com");
+    // const _socket = io("http://localhost:3000");
     setSocket(_socket);
 
     _socket.on("connect", () => {
@@ -148,6 +149,11 @@ export const UserLoggedIn = ({
 
       setCurrentState("leaderboard");
       setLeaderboard(data.leaderboard);
+    });
+    _socket.on("QUIZ_END", () => {
+      console.log("endquiz-87");
+
+      setCurrentState("QUIZ_END");
     });
     _socket.on("problem", (data) => {
       console.log("problem-91");
