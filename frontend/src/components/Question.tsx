@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
-
+import wait from "../assets/Gear-0.2s-200px.gif";
 export const Question = ({
   quizData,
   socket,
@@ -34,17 +34,33 @@ export const Question = ({
 
   const [submitted, setSubmitted] = useState(false);
   const [submission, setSubmission] = useState(9);
+  const [time, setTime] = useState(20);
+
+  useEffect(() => {
+    // Decrease the timer every second
+    const intervalId = setInterval(() => {
+      setTime((prev) => prev - 1);
+    }, 1000);
+
+    // Clear the interval when the component unmounts or when seconds reach 0
+    return () => clearInterval(intervalId);
+  }, []);
+
+  console.log(time);
 
   if (submitted) {
     return (
       <div className="bg-black h-screen flex flex-col justify-center items-center gap-y-5 text-white">
-        wait for time to end ...
+        <img height={200} src={wait} alt="sdds" />
       </div>
     );
   }
 
   return (
     <div className="bg-black h-screen flex flex-col justify-center items-center gap-y-5 text-white">
+      <div className="absolute right-10 top-10 h-16 w-16 flex justify-center items-center bg-white text-black rounded-full">
+        {time}
+      </div>
       <div className="w-52 gap-y-2 flex flex-col">
         <h1 className=" mb-3 text-start">{quizData.title}</h1>
         {quizData.options?.map((o, index) => (

@@ -11,7 +11,7 @@ function Admin() {
   const [quizId, setQuizId] = useState("");
 
   useEffect(() => {
-    const _socket = io("https://real-time-quiz-app.onrender.com");
+    const _socket = io("http://localhost:3000");
     setSocket(_socket);
     _socket.on("connect", () => {
       console.log("connected");

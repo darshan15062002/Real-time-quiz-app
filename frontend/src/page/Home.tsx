@@ -103,7 +103,7 @@ export const UserLoggedIn = ({
   const [userIds, setUserId] = useState("");
   const [users, setUsers] = useState([]);
   useEffect(() => {
-    const _socket = io("https://real-time-quiz-app.onrender.com");
+    const _socket = io("http://localhost:3000");
     setSocket(_socket);
 
     _socket.on("connect", () => {
