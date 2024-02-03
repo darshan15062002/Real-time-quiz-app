@@ -14,9 +14,9 @@ function Home() {
 
   if (!submitted) {
     return (
-      <div className="h-screen flex gap-y-5 flex-col justify-center items-center w-full bg-black">
+      <div className="h-screen flex gap-y-14 flex-col justify-center items-center w-full bg-black">
         <button
-          className="absolute top-6 right-10 bg-white p-2"
+          className="absolute top-6 right-10 border border-white text-white rounded-md p-2"
           onClick={() => {
             navigate("./admin");
           }}
@@ -25,13 +25,17 @@ function Home() {
         </button>
         <h1 className="font-bold text-4xl text-white">Join Room</h1>
         <div
-          className="flex
-      flex-col gap-y-5"
+          style={{
+            boxShadow: "rgb(59 130 246 / 0.5) 0px 0px 0px 20px",
+          }}
+          className=" mx-5 flex
+          rounded-xl
+      flex-col bg-white  p-10  gap-y-5"
         >
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="p-2 px-4"
+            className="p-2 px-6 w-full outline-slate-400  bg-slate-200 rounded-md"
             type="text"
             placeholder="name"
             name=""
@@ -40,15 +44,16 @@ function Home() {
           <input
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="p-2 px-4"
+            className="p-2 px-6 w-full outline-slate-400  bg-slate-200 rounded-md"
             type="text"
             name=""
             id=""
             placeholder="room Id"
           />
           <p className="  text-red-600">{error}</p>
+
           <button
-            className="bg-white p-2"
+            className="bg-white rounded-md px-4 py-2 border font-bold border-black"
             onClick={() => {
               setSubmitted(true);
             }}

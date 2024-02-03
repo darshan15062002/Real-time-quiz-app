@@ -32,25 +32,37 @@ function Admin() {
   if (!quizId)
     return (
       <div className="h-screen bg-black flex flex-col justify-center items-center gap-y-5">
-        <Link to="/" className="absolute top-6 right-10 bg-white p-2">
+        <Link
+          to="/"
+          className="absolute top-6 right-10 border border-white text-white rounded-md p-2"
+        >
           Join Room
         </Link>
-        <input
-          className=" p-3"
-          type="text"
-          placeholder="RoomID"
-          value={roomId}
-          onChange={(e) => setRoomId(e.target.value)}
-        />
-        <button
-          className="px-4 py-2 bg-white rounded-sm font-bold "
-          onClick={() => {
-            socket?.emit("createQuiz", { roomId });
-            setQuizId(roomId);
+        <div
+          style={{
+            boxShadow: "rgb(59 130 246 / 0.5) 0px 0px 0px 20px",
           }}
+          className=" mx-5 flex
+          rounded-xl
+      flex-col bg-white  p-10  gap-y-5"
         >
-          create Room
-        </button>
+          <input
+            className="p-2 px-6 w-full outline-slate-400  bg-slate-200 rounded-md"
+            type="text"
+            placeholder="RoomID"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+          />
+          <button
+            className="bg-white rounded-md px-4 py-2 border font-bold border-black "
+            onClick={() => {
+              socket?.emit("createQuiz", { roomId });
+              setQuizId(roomId);
+            }}
+          >
+            create Room
+          </button>
+        </div>
       </div>
     );
   return (
