@@ -49,7 +49,7 @@ function Admin() {
           <input
             className="p-2 px-6 w-full outline-slate-400  bg-slate-200 rounded-md"
             type="text"
-            placeholder="RoomID"
+            placeholder="Room Id"
             value={roomId}
             onChange={(e) => setRoomId(e.target.value)}
           />
@@ -60,7 +60,7 @@ function Admin() {
               setQuizId(roomId);
             }}
           >
-            create Room
+            Create Room
           </button>
         </div>
       </div>

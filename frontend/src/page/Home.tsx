@@ -37,7 +37,7 @@ function Home() {
             onChange={(e) => setName(e.target.value)}
             className="p-2 px-6 w-full outline-slate-400  bg-slate-200 rounded-md"
             type="text"
-            placeholder="name"
+            placeholder="Name"
             name=""
             id=""
           />
@@ -48,7 +48,7 @@ function Home() {
             type="text"
             name=""
             id=""
-            placeholder="room Id"
+            placeholder="Room Id"
           />
           <p className="  text-red-600">{error}</p>
 
